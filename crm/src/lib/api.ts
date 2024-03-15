@@ -59,16 +59,16 @@ export interface SummaryStats {
  const buildUrl = (...paths: string[]) =>
 	`https://65c21c4ff7e6ea59682aa7e1.mockapi.io/api/v1/${paths.join('/')}`;
  
-
-	const stringifyQueryParams = (params: Record<string, string>) =>
-  new URLSearchParams(params).toString();
-
-const sendRequest = async <T>(url: string, init?: RequestInit) => {
-  const res = await fetch(url, init);
-  if (!res.ok) {
-    throw new Error(await res.text());
-  }
-  return (await res.json()) as T;
+ const stringifyQueryParams = (params: Record<string, string>) =>
+	new URLSearchParams(params).toString();
+ 
+ const sendRequest = async <T>(url: string, init?: RequestInit) => {
+	const res = await fetch(url, init);
+	if (!res.ok) {
+	  throw new Error(await res.text());
+	}
+ 
+	return (await res.json()) as T;
  };
  
  export const getSummaryStats = (init?: RequestInit) => {
@@ -86,10 +86,11 @@ const sendRequest = async <T>(url: string, init?: RequestInit) => {
  export const getCategories = (init?: RequestInit) => {
 	return sendRequest<Category[]>(buildUrl('categories'), init);
  };
-
+ 
  export const getCompanies = (init?: RequestInit) => {
 	return sendRequest<Company[]>(buildUrl('companies'), init);
  };
+ 
  export const getCompany = (id: string, init?: RequestInit) => {
 	return sendRequest<Company>(buildUrl('companies', id), init);
  };
@@ -102,4 +103,34 @@ const sendRequest = async <T>(url: string, init?: RequestInit) => {
 	  `${buildUrl('promotions')}?${stringifyQueryParams(params)}`,
 	  init,
 	);
+ };
+
+ 
+export const createCompany = async (
+	data: Omit<Company, 'id' | 'hasPromotions'>,
+	init?: RequestInit,
+ ) => {
+	return sendRequest<Company>(buildUrl('companies'), {
+	  ...init,
+	  method: 'POST',
+	  body: JSON.stringify(data),
+	  headers: {
+		 ...(init && init.headers),
+		 'content-type': 'application/json',
+	  },
+	});
+ };
+ 
+ export const createPromotion = async (
+	data: Omit<Promotion, 'id'>,
+	init?: RequestInit,
+ ) => {
+	return sendRequest<Promotion>(buildUrl('promotions'), {
+	  method: 'POST',
+	  body: JSON.stringify(data),
+	  headers: {
+		 ...(init && init.headers),
+		 'content-type': 'application/json',
+	  },
+	});
  };
