@@ -20,6 +20,7 @@ export default function SearchInput({
 	};
  
 	const handleClick = () => {
+		console.log(inputValue);
 		 queryClient.setQueryData(['filterValue'], inputValue );
 	};
 

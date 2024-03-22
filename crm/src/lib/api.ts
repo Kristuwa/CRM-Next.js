@@ -59,6 +59,7 @@ export interface SummaryStats {
  const buildUrl = (...paths: string[]) =>
 	`https://65fd54039fc4425c6531aecc.mockapi.io/api/v1/${paths.join('/')}`;
 	// 65fd54039fc4425c6531aecc
+	//65c21c4ff7e6ea59682aa7e1
  const stringifyQueryParams = (params: Record<string, string>) =>
 	new URLSearchParams(params).toString();
  
