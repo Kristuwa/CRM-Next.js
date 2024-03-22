@@ -57,8 +57,8 @@ export interface SummaryStats {
  const PROJECT_TOKEN = process.env.NEXT_PUBLIC_PROJECT_TOKEN;
  
  const buildUrl = (...paths: string[]) =>
-	`https://65c21c4ff7e6ea59682aa7e1.mockapi.io/api/v1/${paths.join('/')}`;
- 
+	`https://65fd54039fc4425c6531aecc.mockapi.io/api/v1/${paths.join('/')}`;
+	// 65fd54039fc4425c6531aecc
  const stringifyQueryParams = (params: Record<string, string>) =>
 	new URLSearchParams(params).toString();
  
