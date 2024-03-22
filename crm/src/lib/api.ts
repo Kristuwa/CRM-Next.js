@@ -134,3 +134,8 @@ export const createCompany = async (
 	  },
 	});
  };
+
+ export const filterCompanies = async (text: string) => {
+	const companies: Company[] = await getCompanies();
+	return companies.filter(company => company.title.toLowerCase().includes(text))
+ }

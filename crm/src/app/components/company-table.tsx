@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { getCompanies } from '@/lib/api';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { filterCompanies } from '@/lib/api';
 import CompanyRow from '@/app/components/company-row';
 
 export interface CompanyTableProps {}
@@ -17,11 +17,14 @@ const headers = [
 ];
 
 export default function CompanyTable({}: CompanyTableProps) {
-  const { data } = useQuery({
-    queryKey: ['companies'],
-    queryFn: () => getCompanies(),
-    staleTime: 10 * 1000,
-  });
+	const queryClient = useQueryClient(); // Используйте useQueryClient для доступа к queryClient
+	const filterValue = queryClient.getQueryData(['filterValue']) || ''; // Получение значения фильтрации из queryClient
+ console.log(filterValue)
+	const { data } = useQuery({
+	  queryKey: ['companies', filterValue],
+	  queryFn: () => filterCompanies(""),
+	  staleTime: 10 * 1000,
+	});
 
   return (
     <div className="py-8 px-10 bg-gray-100">
